@@ -1,0 +1,10 @@
+스케줄링 : Ready queue 중에 실행시킬 프로세스를 하나 선택하는 것(고르는 작업)
+dispatch : 고른 프로세스를 CPU에 올리는 것
+dispatcher : dispatch 하는 아이
+
+Turnaround time(총처리 시간) : 프로세스 완료하는데 걸리는 시간 (프로세스 완료한 시간 - 도착 시간)
+wating time : 기다리는 시간(turnaround time(아니면 프로세스 끝난 시간?) - cpu burst time)
+
+FCFS(선입 선처리) : 비선점형
+SJF : 선점형(= 최소 잔여 시간 우선 스케줄링) or 비선점형
+RR(라운드 로빈) : time quantum or time slice, 선점형

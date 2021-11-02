@@ -1,0 +1,140 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+class String {
+private:
+	int length;
+	char* str;
+
+public:
+	String();
+	String(const char* s);
+	String(const String& s);	//복사 생성자 
+	~String();
+
+	String& operator=(const String& s);	//깊은 복사를 할 꺼 
+	String operator+(const String& s);
+	String& operator+=(const String& s);
+	friend ostream& operator<<(ostream& os, const String& s);
+	friend istream& operator>>(istream& is, String& s);
+};
+
+String::String() :length(0)
+{
+	//cout<<"Constructor1"<<endl;
+	str = NULL;	//null로 지정 안 해주면 뭐로 초기화 됨? 
+}
+
+String::String(const char* s) : length(strlen(s) + 1)
+{
+	str = new char[length];
+	strcpy(str, s);
+}
+
+String::String(const String& s)
+	: length(s.length)
+{
+	//cout<<"Copy Constructor"<<endl;
+	str = new char[length];
+	strcpy(str, s.str);
+}
+
+String::~String()
+{
+	//소멸자
+	//cout<<"Destructor  "<<str<<"  소멸"<<endl;
+
+	delete[]str;
+}
+
+String& String::operator=(const String& s)
+{
+	char* temp = new char[s.length];
+	strcpy(temp, s.str);
+
+	if (str != NULL)
+	{
+		delete[]str;
+	}
+
+	length = s.length;
+	str = new char[length];
+	strcpy(str, temp);
+
+
+	return *this;	//=연산자는 자신을 리턴해야한다 
+}
+
+String String::operator+(const String& s)
+{
+	int temp_length = length + s.length - 1;
+	char* temp = new char[temp_length];	//length는 각각 null값도 세고 있기 때문.
+	strcpy(temp, str);
+	strcat(temp, s.str);
+
+	String result(temp);
+
+
+	return String(temp);
+}
+
+
+//+연산자를 오버로딩한 것을 이용할 수는 없는가... 
+// -> 해결! 
+String& String::operator+=(const String& s)
+{
+	//오버로딩한 =연산자와 +연산자를 이용하는 효율적인 방법
+	this->operator=(this->operator+(s));
+	return *this;
+
+
+}
+
+ostream& operator<<(ostream& os, const String& s)
+{
+
+	if (s.str != NULL)
+	{
+
+		os << s.str;
+	}
+	return os;
+
+}
+
+istream& operator>>(istream& is, String& s)
+{
+	if (s.str != NULL)
+	{
+		delete[]s.str;
+	}
+	char* temp = new char[100];
+	is >> temp;
+	s.length = strlen(temp) + 1;
+	s.str = new char[s.length];
+	strcpy(s.str, temp);
+
+	return is;
+
+}
+int main()
+{
+	String a, b, c;
+
+	cout << "a, b, c :";
+	cin >> a >> b >> c;
+
+	cout << "a + b = " << a + b << endl;
+	c = a;
+	cout << "c = a " << endl;
+	cout << "c = " << c << endl;
+
+	a += b;
+	cout << "a+=b" << endl;
+	cout << "a = " << a << endl;
+
+
+}

@@ -1,0 +1,134 @@
+1장
+
+1. 
+데이터 저장 공간 => 데이터베이스
+데이터베이스를 관리/운영하는 소프트웨어 => DBMS
+데이터에 오류 있어서는 안됨 => 데이터의 무결성
+데이터 파일의 저장소 변경하더라도 기존에 작성된 응용 프로그램은 영향 받지 X => 데이터의 독립성
+
+2. 1
+3. 4
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+2장
+
+1.
+데이터 입력 위해 표 형태로 만든 것 =>테이블
+테이블이 저장되는 장소 => 데이터베이스
+데이터베이스 관리하는 시스템 or 소프트웨어 => DBMS
+각 행을 구분하는 유일한 열, 중복 x, 공백 x => 기본키(주키)
+
+2. 데이터베이스 구축 과정
+DBMS 설치 -> 데이터베이스 구축 -> 데이터베이스 개체 활용 -> 데이터베이스 백업, 관리
+
+3. mysql에서 데이터베이스 == 스키마
+  기본키 : PK
+   대소문자 구분 안함
+
+4. SELECT * FROM myTable WHERE age >= 23;
+
+5
+데이터 빨리 찾 => 인덱스
+가상의 테이블, 진짜 테이브와 링크로 연결 => 뷰
+MySQL에서 제공하는 프로그래밍 기능 => 스토어드 프로시저?
+테이블에 부착되어 테이블에 INSERT, UPDATE, DELETE 작업 발생하면 실행되는 코드 => 트리거
+
+6
+테이블에 존재하는 모든 데이터 읽으면서 조건에 맞으면 결과로 추출, 안맞으면 버림
+모든 결과 찾을 때까지 시간 오래 걸릴 수 있
+조건이 없거나 사용 가능 인덱스가 없으면 전체 테이블 스캔 사용됨
+인덱스 스캔은 인덱스를 구성하는 컬럼 값을 기반으로 데이터 추출하는 액세스 기법
+
+7
+CREATE INDEX 인덱스이름 ON 테이블이름(열이름)
+
+8
+CREATE VIEW 뷰이름 AS SELECT ~
+
+9
+DELIMITER //
+CREATE PROCEDURE 스토어드프로시저이름()
+BEGIN
+          스토어드 프로시저 내용
+END //
+DELIMITER ;
+(실행은 CALL 스토어드프로시저이름())
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+3장
+1
+현실 세계의 업무를 컴퓨터 시스템으로 옮겨놓는 일련의 과정 => 프로젝트
+소프트웨어 개발 모델중 하나, 각 단계 끝나면 다음 단계로 진행하는 모델 => 폭포수 모델
+디비 분야의 설계 작업 총칭 => 데이터베이스 모델링?
+
+2 플젝 진행 과정
+플젝 계획 -> 업무 분석 -> 시스템 설계 -> 프로그램 구현 -> 테스트 -> 유지/보수
+
+3. 열 맞나 ㅋㅋ 속성?
+4. L자형 테이블
+5. 기본키(PK), 외래키(FK)
+6. 물품종류가 부모인가
+7 머냐 3?
+
+4장
+10. 백업 복원?
+나머지 안함
+
+5장
+1. USE employees ?
+2.
+  X,X,X, O( -- 다음엔 공백 필요),O
+3. 3 영어/숫자/기호 1바이트, 한글 3바이트
+4. 개체 이름 중간에 공백을 사용하려면 백틱 사용 (``)
+5. 
+키 178 180 182인 애들 이름, 키 출력
+주소가 ~남인 애들 이름 출력
+키가 170 ~180 사이
+번호 011인 애들
+주소 중복없게 출력
+총구매액 100 넘는 사용자 출력
+
+6 SELECT DISTINCT mobile1 FROM userTBL ORDER BY mobile1 DESC
+7 select userName from userTBL order by mDate asc limit 2,2
+8 CREATE TABLE emp (SELECT dept_no AS deptNO, dept_name AS deptName FROM departments);
+9 SELECT userID AS '사용자ID', num AS '총구매개수' FROM buyTBL GROUP BY userID;
+10. SELECT userID AS '사용자ID', AVG(amount) AS '평균구매개수' FROM buyTBL GROUP BY userID
+HAVING AVG(amount) >= 2; 
+6장
+1.
+DB, 테이블, 뷰, 인덱스 등의 DB 개체를 생성, 삭제 변경하는 데 사용하는 SQL문 => DDL(데이터 정의어)
+데이터 검색, 삽입, 수정, 삭제 => DML(데이터 조작어)
+권한 부여, 빼앗을 때 => DCL(데이터 제어어)
+
+2. 3
+3. AUTO_INCREMENT, @@auto_increment_increment
+(꼭 여기는 기본키 설정, 변수 3으로 하면 1000 시작인데 10으로 하면 1011임 왜지)
+4. CREATE TABLE examTable3 (SELECT emp_no AS id 아 귀찮아 FROM employees.employees.
+5. SET, WHERE
+6. DELETE, TRUNCATE, DROP
+7. IGNORE, ON DUPLICATE KEY
+8. ROW_NUMBER(), PARTITION BY
+9. ㅁㄹ
+
+7장
+TINYINT, BOOL : 1바이트
+SMALLINT : 2바이트
+MEDIUMINT : 3바이트
+INT : 4바이트
+BINGINT : 8바이트
+FLOAT : 4바이트
+DOUBLE : 8바이트
+ SET @var1 = 5;
+set @var2 = 3;
+select @var1 + @var2;
+
+SET @Cnt = 5;
+PREPARE sqlTEXT
+	FROM 'select userName, height FROM userTBL ORder by height desc limit ?';
+EXECUTE sqlTEXT using @cnt;
+
+CONVERT(AVG(amount), SIGNED INTEGER) AS ~~
+8장
+1. 일대다 관계(한쪽 테이블에는 하나의 값만, 그 값과 대응되는 다른 쪽 테이블의 값은 여러 개)
+2. INNER JOIN, U.userID = B.userID
+3. DISTINCT(중복없게 출력하거나 조인에서는 구매 기록 하나라도 있는 목록 출력)
+4. OUTER JOIN, U.userID = B.userID
